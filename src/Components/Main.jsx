@@ -11,9 +11,12 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         flexShrink: 1,
         alignContent: "center",
-        backgroundColor: theme.colors.mainBackground
+        backgroundColor: theme.colors.mainBackground,
+        fontFamily: theme.fonts
     },
 });
+
+console.log(theme.fonts)
 
 const Main = () => {
     return (

@@ -1,6 +1,7 @@
 import {Pressable, View, StyleSheet} from "react-native";
 import FormikTextInput from "./FormikTextInput";
 import Text from "./Text";
+import {useField, useFormikContext} from "formik";
 
 const SignInForm = ({onSubmit}) => {
 
@@ -21,11 +22,21 @@ const SignInForm = ({onSubmit}) => {
             textAlign: "center"
         }
     })
+
+    const {errors} = useFormikContext();
+    const hasErrors = Object.keys(errors).length > 0;
+
+    const handleSubmit = () => {
+        if (!hasErrors) {
+            onSubmit();
+        }
+    }
+
     return (
         <View style={styles.container}>
             <FormikTextInput name="username" placeholder="Username"/>
             <FormikTextInput name="password" placeholder="Password" secureTextEntry/>
-            <Pressable style={styles.submit} onPress={onSubmit}>
+            <Pressable style={styles.submit} onPress={handleSubmit}>
                 <Text style={styles.text}>Submit</Text>
             </Pressable>
         </View>

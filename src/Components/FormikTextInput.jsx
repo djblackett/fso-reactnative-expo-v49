@@ -8,7 +8,8 @@ import theme from "../theme";
 const styles = StyleSheet.create({
     errorText: {
         marginTop: 5,
-        color: "red"
+        color: theme.colors.error,
+
     },
     inputBox: {
         width: "90%",
@@ -18,13 +19,26 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         borderWidth: 1,
         borderColor: theme.colors.descriptionText,
-        borderBlockColor: theme.colors.descriptionText
+        borderBottomColor: theme.colors.descriptionText,
+        borderTopColor: theme.colors.descriptionText
+    },
+    errorStyle: {
+        width: "90%",
+        padding: 8,
+        marginTop: 5,
+        backgroundColor: "white",
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: theme.colors.error,
+        borderBottomColor: theme.colors.error,
+        borderTopColor: theme.colors.error
     }
 });
 
 const FormikTextInput = ({name, ...props}) => {
     const [field, meta, helpers] = useField(name);
     const showError = meta.touched && meta.error;
+
 
     return (
         <>
@@ -33,7 +47,7 @@ const FormikTextInput = ({name, ...props}) => {
                 onBlur={() => helpers.setTouched(true)}
                 value={field.value}
                 error={showError}
-                style={styles.inputBox}
+                style={showError ? styles.errorStyle : styles.inputBox }
                 placeholderTextColor={theme.colors.descriptionText}
                 {...props}
             />
