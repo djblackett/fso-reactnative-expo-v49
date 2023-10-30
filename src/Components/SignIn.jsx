@@ -1,6 +1,7 @@
 import { Formik } from "formik";
 import SignInForm from "./SignInForm";
 import * as yup from "yup";
+import useSignIn from "../utils/useSignIn";
 
 const SignIn = ({ setLoggedIn }) => {
 
@@ -9,9 +10,11 @@ const SignIn = ({ setLoggedIn }) => {
     password: ""
   };
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const onSubmit = () => {
+    console.log();
   };
+
+  const [signIn] = useSignIn();
 
   const validationSchema = yup.object().shape({
     username: yup
@@ -25,14 +28,10 @@ const SignIn = ({ setLoggedIn }) => {
   });
 
   return (
-    <Formik initialValues={ initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} setLoggedIn={setLoggedIn}/>}
+    <Formik initialValues={ initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} setLoggedIn={setLoggedIn} signIn={signIn}/>}
     </Formik>
   );
 };
 
 export default SignIn;
-
-
-
-

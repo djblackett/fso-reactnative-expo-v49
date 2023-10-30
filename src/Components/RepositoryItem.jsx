@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const numberShortener = (num) => {
+export const numberShortener = (num) => {
   if (num < 1000) {
     return String(num);
   }
@@ -78,7 +78,7 @@ const numberShortener = (num) => {
 
 export const RepositoryItem = ({ item }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="repositoryItem">
       <View style={styles.topContainer}>
         <Image source={{ uri: item.ownerAvatarUrl }}  alt={"user avatar"} style={styles.image}/>
         <View style={styles.info}>
