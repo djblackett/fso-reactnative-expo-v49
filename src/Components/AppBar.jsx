@@ -1,7 +1,7 @@
 import { View, StyleSheet, ScrollView, Pressable } from "react-native";
 import theme from "../theme";
 import AppBarTab from "./AppBarTab";
-import { Link } from "react-router-native";
+import { Link, useNavigate } from "react-router-native";
 import useAuthStorage from "../hooks/useAuthStorage";
 import { useApolloClient, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ const AppBar = ( { setLoggedIn }) => {
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
   const [token, setToken] = useState(null);
+  const navigate = useNavigate();
 
   const { data, error, loading } = useQuery(ME, {
     fetchPolicy: "cache-and-network",
@@ -32,7 +33,7 @@ const AppBar = ( { setLoggedIn }) => {
     setLoggedIn(false);
     await authStorage.removeAccessToken();
     await apolloClient.resetStore();
-    console.log(token);
+    navigate("/");
   };
 
   useEffect(() => {
@@ -44,17 +45,18 @@ const AppBar = ( { setLoggedIn }) => {
 
   return <View style={styles.container}>
     <ScrollView horizontal>
-      <Link style={styles.link} to="/">
+      <Link to="/">
         <AppBarTab title={"Repositories"} />
       </Link>
+      { data?.me && <Link to={"create-review"}>
+        <AppBarTab title={"Create a review"} />
+      </Link> }
       { !data?.me && <Link to="/signin">
         <AppBarTab title={"Sign in"} />
       </Link> }
-
       { data?.me && <Pressable onPress={handleSignOut}>
         <AppBarTab title={"Sign out"}/>
       </Pressable>
-
       }
     </ScrollView>
   </View>;

@@ -5,9 +5,10 @@ import theme from "../theme";
 import { Navigate, Route, Routes } from "react-router-native";
 import SignIn from "./SignIn";
 import { useState } from "react";
-import useSignIn from "../utils/useSignIn";
+import useSignIn from "../hooks/useSignIn";
 import SingleRepositoryItem from "./SingleRepositoryItem";
 import SingleRepositoryView from "./SingleRepositoryView";
+import CreateReview from "./CreateReview";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +34,7 @@ const Main = () => {
         <Route path="/" element={<RepositoryList />}/>
         <Route path="/:id" element={<SingleRepositoryView />} />
         <Route path="/signin" element={<SignIn setLoggedIn={setLoggedIn} signIn={signIn}/>}/>
+        <Route path={"/create-review"} element={<CreateReview />} />
         <Route path="*" element={<Navigate to="/" replace/>}/>
       </Routes>
     </View>
