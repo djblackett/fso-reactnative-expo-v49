@@ -76,26 +76,30 @@ export const numberShortener = (num) => {
 };
 
 
+
 export const RepositoryItem = ({ item }) => {
   return (
-    <View style={styles.container} testID="repositoryItem">
-      <View style={styles.topContainer}>
-        <Image source={{ uri: item.ownerAvatarUrl }}  alt={"user avatar"} style={styles.image}/>
-        <View style={styles.info}>
-          <Text style={styles.fullName}>{item.fullName}</Text>
-          <Text style={styles.description}>{ item.description }</Text>
-          <View style={styles.languageBackground}>
-            <NativeText style={styles.languageText}>{ item.language }</NativeText>
+    <>
+      {item && <View style={styles.container} testID="repositoryItem">
+        <View style={styles.topContainer}>
+          <Image source={{ uri: item.ownerAvatarUrl }}  alt={"user avatar"} style={styles.image}/>
+          <View style={styles.info}>
+            <Text style={styles.fullName}>{item.fullName}</Text>
+            <Text style={styles.description}>{ item.description }</Text>
+            <View style={styles.languageBackground}>
+              <NativeText style={styles.languageText}>{ item.language }</NativeText>
+            </View>
           </View>
         </View>
+        <View style={styles.statsContainer}>
+          <View style={styles.stats}><Text style={styles.description}>Stars</Text><Text style={styles.numbers}>{ numberShortener(item.stargazersCount) }</Text></View>
+          <View style={styles.stats}><Text style={styles.description}>Forks</Text><Text style={styles.numbers}>{ numberShortener(item.forksCount) }</Text></View>
+          <View style={styles.stats}><Text style={styles.description}>Reviews</Text><Text style={styles.numbers}>{ numberShortener(item.reviewCount) }</Text></View>
+          <View style={styles.stats}><Text style={styles.description}>Rating</Text><Text style={styles.numbers}>{ numberShortener(item.ratingAverage) }</Text></View>
+        </View>
       </View>
-      <View style={styles.statsContainer}>
+      }
+    </>
 
-        <View style={styles.stats}><Text style={styles.description}>Stars</Text><Text style={styles.numbers}>{ numberShortener(item.stargazersCount) }</Text></View>
-        <View style={styles.stats}><Text style={styles.description}>Forks</Text><Text style={styles.numbers}>{ numberShortener(item.forksCount) }</Text></View>
-        <View style={styles.stats}><Text style={styles.description}>Reviews</Text><Text style={styles.numbers}>{ numberShortener(item.reviewCount) }</Text></View>
-        <View style={styles.stats}><Text style={styles.description}>Rating</Text><Text style={styles.numbers}>{ numberShortener(item.ratingAverage) }</Text></View>
-      </View>
-    </View>
   );
 };

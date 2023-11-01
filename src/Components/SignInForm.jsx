@@ -4,7 +4,6 @@ import FormRender from "./FormRender";
 
 
 const SignInForm = ({ setLoggedIn, signIn }) => {
-
   const navigate = useNavigate();
   const { errors, values } = useFormikContext();
   const hasErrors = Object.keys(errors).length > 0;
@@ -28,7 +27,8 @@ const SignInForm = ({ setLoggedIn, signIn }) => {
       }
     }
   };
-  return <FormRender onSubmit={handleSubmit} signIn={signIn} />;
+
+  return <FormRender setLoggedIn={setLoggedIn} signIn={signIn} onSubmit={handleSubmit}/>;
 };
 
 export default SignInForm;

@@ -1,6 +1,8 @@
 import { Pressable, StyleSheet, View } from "react-native";
 import FormikTextInput from "./FormikTextInput";
 import Text from "./Text";
+import { useNavigate } from "react-router-native";
+import { useFormikContext } from "formik";
 
 function FormRender({ onSubmit }) {
 
@@ -21,6 +23,8 @@ function FormRender({ onSubmit }) {
       textAlign: "center"
     }
   });
+
+
 
   return <View style={styles.container}>
     <FormikTextInput name="username" placeholder="Username"/>
