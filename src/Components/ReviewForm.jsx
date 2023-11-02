@@ -46,7 +46,7 @@ const ReviewForm = ({ mutate }) => {
       <FormikTextInput name="ownerName" placeholder="Username"/>
       <FormikTextInput name="repositoryName" placeholder="Repo name"/>
       <FormikTextInput name="rating" placeholder="Rating"/>
-      <FormikTextInput name="text" placeholder="Write your review"/>
+      <FormikTextInput name="text" placeholder="Write your review" multiline={true}/>
       <Pressable style={styles.submit} onPress={onSubmit}>
         <Text style={styles.text}>Create a review</Text>
       </Pressable>

@@ -12,17 +12,6 @@ const CreateReview = () => {
       justifyContent: "space-between",
       alignItems: "center"
     },
-    submit: {
-      width: "90%",
-      padding: 8,
-      backgroundColor: "#0165d4",
-      borderRadius: 2,
-      marginTop: 5
-    },
-    text: {
-      color: "white",
-      textAlign: "center"
-    }
   });
 
   const validationSchema = yup.object().shape({

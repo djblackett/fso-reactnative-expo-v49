@@ -9,6 +9,7 @@ import useSignIn from "../hooks/useSignIn";
 import SingleRepositoryItem from "./SingleRepositoryItem";
 import SingleRepositoryView from "./SingleRepositoryView";
 import CreateReview from "./CreateReview";
+import CreateUser from "./CreateUser";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,8 +18,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     backgroundColor: theme.colors.mainBackground,
     fontFamily: theme.fonts,
-
-
   },
 });
 
@@ -35,6 +34,7 @@ const Main = () => {
         <Route path="/:id" element={<SingleRepositoryView />} />
         <Route path="/signin" element={<SignIn setLoggedIn={setLoggedIn} signIn={signIn}/>}/>
         <Route path={"/create-review"} element={<CreateReview />} />
+        <Route path="create-user" element={<CreateUser />} />
         <Route path="*" element={<Navigate to="/" replace/>}/>
       </Routes>
     </View>

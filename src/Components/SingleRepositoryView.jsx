@@ -13,7 +13,8 @@ const SingleRepositoryView = () => {
   const { data, error, loading } = useQuery(REPOSITORY, {
     variables: {
       id: decodeURI(url.id)
-    }
+    },
+    fetchPolicy: "cache-and-network"
   });
 
   useEffect(() => {

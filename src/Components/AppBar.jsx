@@ -53,7 +53,11 @@ const AppBar = ( { setLoggedIn }) => {
       </Link> }
       { !data?.me && <Link to="/signin">
         <AppBarTab title={"Sign in"} />
-      </Link> }
+      </Link>
+      }
+      { !data?.me && <Link to="/create-user">
+        <AppBarTab title={"Sign up"}/>
+      </Link>}
       { data?.me && <Pressable onPress={handleSignOut}>
         <AppBarTab title={"Sign out"}/>
       </Pressable>
@@ -61,7 +65,5 @@ const AppBar = ( { setLoggedIn }) => {
     </ScrollView>
   </View>;
 };
-
-
 
 export default AppBar;
