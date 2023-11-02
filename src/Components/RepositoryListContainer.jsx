@@ -1,6 +1,7 @@
 import { FlatList, View, StyleSheet, Pressable } from "react-native";
 import { RepositoryItem } from "./RepositoryItem";
 import { useNavigate } from "react-router-native";
+import RepoPicker from "./RepoPicker";
 
 const styles = StyleSheet.create({
   separator: {
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator}/>;
 
-const RepositoryListContainer = ({ repositories }) => {
+const RepositoryListContainer = ({ repositories, selectedSortCategory, setSelectedSortCategory }) => {
 
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
@@ -28,6 +29,7 @@ const RepositoryListContainer = ({ repositories }) => {
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => <Pressable onPress={() => handleNavigate(item)}><RepositoryItem item={item}/></Pressable>}
       keyExtractor={item => item.id}
+      ListHeaderComponent={<RepoPicker selectedSortCategory={selectedSortCategory} setSelectedSortCategory={setSelectedSortCategory}/>}
     />
   );
 };
