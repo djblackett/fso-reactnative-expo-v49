@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_REPOSITORIES } from "../graphql/queries";
 
-const useRepositories = ({ selectedSortCategory }) => {
+const useRepositories = ({ selectedSortCategory, searchValue }) => {
   const [repositories, setRepositories] = useState();
+
+  console.log(searchValue);
 
   const getVariables = () => {
     if (selectedSortCategory === "latest") {
@@ -27,13 +29,14 @@ const useRepositories = ({ selectedSortCategory }) => {
       };
     }
 
+
     return  {
       orderBy: "CREATED_AT",
     };
   };
 
   const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: "cache-and-network", variables: getVariables()
+    fetchPolicy: "cache-and-network", variables: { ...getVariables(), searchKeyword: searchValue }
   });
 
   useEffect(() => {
