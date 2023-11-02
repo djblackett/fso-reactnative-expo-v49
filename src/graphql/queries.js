@@ -41,9 +41,24 @@ export const AUTHENTICATE = gql`
 `;
 
 export const ME = gql`
-  query me {
+  query me($includeReviews: Boolean = false) {
       me {
           username
+          reviews @include(if: $includeReviews) {
+              edges {
+                  node {
+                      rating
+                      text
+                      createdAt
+                      user {
+                          username
+                      }
+                      repository {
+                          fullName
+                      }
+                  }
+              }
+          }
       }
     }
 `;

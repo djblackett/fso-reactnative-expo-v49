@@ -2,13 +2,14 @@ import { View, StyleSheet } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
 
-const Review = ({ review }) => {
+const Review = ({ review, myReview=false }) => {
   const styles = StyleSheet.create({
     container: {
       flexDirection: "row",
       width: "100%",
       height: "300",
       padding: 8,
+      paddingRight: 16,
       paddingBottom: 16,
       marginTop: 16,
       backgroundColor: theme.colors.itemBackground
@@ -54,7 +55,7 @@ const Review = ({ review }) => {
     <View style={styles.container}>
       <View style={styles.circle}><Text style={styles.rating}>{review.rating}</Text></View>
       <View style={styles.info}>
-        <Text style={styles.name}>{review.user.username}</Text>
+        {<Text style={styles.name}>{myReview ? review.repository.fullName : review.user.username}</Text>}
         <Text style={styles.date}>{new Date(review.createdAt).toLocaleString("en-US", {
           day: "numeric",
           month: "numeric",

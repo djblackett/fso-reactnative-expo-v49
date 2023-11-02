@@ -51,6 +51,9 @@ const AppBar = ( { setLoggedIn }) => {
       { data?.me && <Link to={"create-review"}>
         <AppBarTab title={"Create a review"} />
       </Link> }
+      {data?.me && <Link to={"my-reviews"}>
+        <AppBarTab title={"My reviews"} />
+      </Link>}
       { !data?.me && <Link to="/signin">
         <AppBarTab title={"Sign in"} />
       </Link>
