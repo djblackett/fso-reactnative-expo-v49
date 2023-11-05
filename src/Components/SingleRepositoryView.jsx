@@ -3,38 +3,50 @@ import Review from "./Review";
 import { useParams } from "react-router-native";
 import { useQuery } from "@apollo/client";
 import { REPOSITORY } from "../graphql/queries";
-import { FlatList, Text } from "react-native";
+import { FlatList, Text, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
+import useRepository from "../hooks/useRepository";
+
+const styles = StyleSheet.create({
+  reviewList: {
+    paddingBottom: 32
+  }
+});
 
 const SingleRepositoryView = () => {
-  const [reviews, setReviews] = useState();
-  const url = useParams();
-  console.log(url);
-  const { data, error, loading } = useQuery(REPOSITORY, {
-    variables: {
-      id: decodeURI(url.id)
-    },
-    fetchPolicy: "cache-and-network"
-  });
 
-  useEffect(() => {
+  const { id } = useParams();
+  const variables = {
+    id,
+    first: 4,
+    after: ""
+  };
 
-    if (data) {
-      setReviews(data.repository.reviews.edges.map(edge => edge.node));
-    }
-  }, [data]);
+  const { repository, fetchMore, loading } = useRepository({ variables });
 
-  console.log(data);
+  const reviewNodes = repository ?
+    repository.reviews.edges.map(edge => edge.node)
+    : [];
+
+  // console.log("Reviews loaded:", reviewNodes.length);
 
   if (loading) {
     return <Text>loading...</Text>;
   }
+
+  const onEndReach = () => {
+    fetchMore();
+  };
+
   return (
     <FlatList
-      data={reviews}
+      style={styles.reviewList}
+      data={reviewNodes}
       renderItem={({ item }) => <Review review={item} /> }
       keyExtractor={({ id }) => id}
-      ListHeaderComponent={<SingleRepositoryItem data={data}/>}
+      ListHeaderComponent={<SingleRepositoryItem repository={repository}/>}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

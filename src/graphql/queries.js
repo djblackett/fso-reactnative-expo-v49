@@ -4,9 +4,12 @@ export const GET_REPOSITORIES = gql`
     query repositories(
         $orderBy: AllRepositoriesOrderBy,
         $orderDirection: OrderDirection,
-        $searchKeyword: String
+        $searchKeyword: String,
+        $after: String,
+        $first: Int
     ) {
-            repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword ) {
+            repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword, after: $after, first: $first ) {
+                totalCount
                 edges {
                     node {
                         id
@@ -18,14 +21,62 @@ export const GET_REPOSITORIES = gql`
                         ownerAvatarUrl
                         reviewCount
                         stargazersCount
+                        createdAt
                     }
+                    cursor
+                }
+                pageInfo {
+                    endCursor
+                    startCursor
+                    hasNextPage
                 }
             }
         }
 `;
 
-export const AUTHENTICATE = gql`
+export const REPOSITORY = gql`
+    query repository(
+        $id: ID!,
+        $after: String,
+        $first: Int
+    ) {
+        repository(id: $id ) {
+            id
+            fullName
+            url
+            description
+            forksCount
+            language
+            ratingAverage
+            ownerAvatarUrl
+            reviewCount
+            stargazersCount,
+            reviews(after: $after, first: $first) {
+                totalCount
+                edges {
+                    node {
+                        id
+                        text
+                        rating
+                        createdAt
+                        user {
+                            id
+                            username
+                        }
+                    }
+                    cursor
+                }
+                pageInfo {
+                    endCursor
+                    startCursor
+                    hasNextPage
+                }
+            }
+        }
+    }
+`;
 
+export const AUTHENTICATE = gql`
     mutation authenticate(
         $username: String!,
         $password: String!
@@ -47,6 +98,7 @@ export const ME = gql`
           reviews @include(if: $includeReviews) {
               edges {
                   node {
+                      id
                       rating
                       text
                       createdAt
@@ -54,6 +106,7 @@ export const ME = gql`
                           username
                       }
                       repository {
+                          id
                           fullName
                       }
                   }
@@ -61,38 +114,6 @@ export const ME = gql`
           }
       }
     }
-`;
-
-export const REPOSITORY = gql`
-  query repository($id: ID!) {
-      repository(id: $id) {
-          id
-          fullName
-          url
-          description
-          forksCount
-          language
-          ratingAverage
-          ownerAvatarUrl
-          reviewCount
-          stargazersCount,
-          reviews {
-              edges {
-                  node {
-                      id
-                      text
-                      rating
-                      createdAt
-                      user {
-                          id
-                          username
-                      }
-                  }
-              }
-          }
-      }
-  
-  }
 `;
 
 export const CREATE_REVIEW = gql`
@@ -103,7 +124,6 @@ export const CREATE_REVIEW = gql`
   }
 `;
 
-
 export const CREATE_USER = gql`
     mutation CreateUser($user: CreateUserInput) {
         createUser(user: $user) {
@@ -111,4 +131,8 @@ export const CREATE_USER = gql`
             username
         }
     }`;
-// other queries...
+
+export const DELETE_REVIEW = gql`
+    mutation DeleteReview($deleteReviewId: ID!) {
+        deleteReview(id: $deleteReviewId)
+    }`;

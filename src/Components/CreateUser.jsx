@@ -4,17 +4,15 @@ import CreateUserForm from "./CreateUserForm";
 import { StyleSheet, View } from "react-native";
 import { ref } from "yup";
 
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 16
+  }
+});
 
 const CreateUser = () => {
-  const styles = StyleSheet.create({
-    container: {
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginTop: 16
-    }
-  });
-
-
 
   const initialValues = {
     username: "",
@@ -23,7 +21,7 @@ const CreateUser = () => {
   };
 
   const onSubmit = () => {
-    console.log();
+    // console.log();
   };
 
   const validationSchema = yup.object().shape({

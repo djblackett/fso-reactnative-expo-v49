@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { ImageBackground, StyleSheet, View } from "react-native";
 import RepositoryList from "./RepositoryList";
 import AppBar from "./AppBar";
 import theme from "../theme";
@@ -6,11 +6,15 @@ import { Navigate, Route, Routes } from "react-router-native";
 import SignIn from "./SignIn";
 import { useState } from "react";
 import useSignIn from "../hooks/useSignIn";
-import SingleRepositoryItem from "./SingleRepositoryItem";
 import SingleRepositoryView from "./SingleRepositoryView";
 import CreateReview from "./CreateReview";
 import CreateUser from "./CreateUser";
 import MyReviews from "./MyReviews";
+import { Dimensions } from "react-native";
+
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +24,20 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.mainBackground,
     fontFamily: theme.fonts,
   },
+  image: {
+    width: windowWidth,
+
+    position: "absolute",
+    top: 0,
+    bottom: windowHeight,
+    left: 0,
+    right: 0
+
+  }
 });
+
+
+
 
 const Main = () => {
 
@@ -29,7 +46,9 @@ const Main = () => {
 
   return (
     <View style={styles.container}>
+
       <AppBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      {/*<ImageBackground source={require("./background.jpg")} style={styles.image}/>*/}
       <Routes>
         <Route path="/" element={<RepositoryList />}/>
         <Route path="/:id" element={<SingleRepositoryView />} />

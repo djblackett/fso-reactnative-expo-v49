@@ -11,10 +11,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     padding: 12,
-    paddingTop: 32,
+    paddingBottom: 0,
+    paddingTop: 16,
     color: theme.colors.appBar,
     backgroundColor: theme.colors.appBarBackground
   },
+  scroll: {
+    paddingTop: 12,
+    paddingBottom: 12
+  }
 });
 
 const AppBar = ( { setLoggedIn }) => {
@@ -28,12 +33,12 @@ const AppBar = ( { setLoggedIn }) => {
   });
 
   const handleSignOut = async () => {
-    console.log(token);
+    navigate("/");
     setToken(null);
     setLoggedIn(false);
     await authStorage.removeAccessToken();
     await apolloClient.resetStore();
-    navigate("/");
+
   };
 
   useEffect(() => {
@@ -44,7 +49,7 @@ const AppBar = ( { setLoggedIn }) => {
 
 
   return <View style={styles.container}>
-    <ScrollView horizontal>
+    <ScrollView horizontal style={styles.scroll}>
       <Link to="/">
         <AppBarTab title={"Repositories"} />
       </Link>

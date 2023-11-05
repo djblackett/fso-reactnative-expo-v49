@@ -11,7 +11,8 @@ const theme = {
     languageBackground: "#0367ce",
     descriptionText: "#828282",
     itemBackground: "#FFFFFF",
-    error: "#d73a4a"
+    error: "#d73a4a",
+    buttonText: "white"
   },
   fontSizes: {
     body: 14,
@@ -28,6 +29,10 @@ const theme = {
   },
   margins: {
     appBarTabRight: 16
+  },
+  buttons: {
+    height: 50,
+    color: "white"
   }
 };
 

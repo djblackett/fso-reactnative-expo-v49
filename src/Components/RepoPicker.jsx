@@ -1,5 +1,4 @@
 import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import theme from "../theme";
 
@@ -10,8 +9,11 @@ const RepoPicker = ({ selectedSortCategory, setSelectedSortCategory }) => {
     container: {
       borderRadius: 0,
       border: "none",
-      padding: 16,
-      backgroundColor: theme.colors.mainBackground
+      paddingTop: 16,
+      paddingBottom: 16,
+      width: "90%",
+      backgroundColor: theme.colors.mainBackground,
+      alignSelf: "center"
     },
     item: {
       width: "90%"

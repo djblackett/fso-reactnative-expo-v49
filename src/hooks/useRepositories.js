@@ -1,51 +1,35 @@
-import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_REPOSITORIES } from "../graphql/queries";
 
-const useRepositories = ({ selectedSortCategory, searchValue }) => {
-  const [repositories, setRepositories] = useState();
+const useRepositories = ({ variables }) => {
 
-  console.log(searchValue);
-
-  const getVariables = () => {
-    if (selectedSortCategory === "latest") {
-      return {
-        orderBy: "CREATED_AT",
-        orderDirection: "DESC"
-      };
-    }
-
-    if (selectedSortCategory === "highest") {
-      return {
-        orderBy: "RATING_AVERAGE",
-        orderDirection: "DESC"
-      };
-    }
-
-    if (selectedSortCategory === "lowest") {
-      return {
-        orderBy: "RATING_AVERAGE",
-        orderDirection: "ASC"
-      };
-    }
-
-
-    return  {
-      orderBy: "CREATED_AT",
-    };
-  };
-
-  const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: "cache-and-network", variables: { ...getVariables(), searchKeyword: searchValue }
+  const { data, loading, fetchMore, ...result } = useQuery(GET_REPOSITORIES, {
+    fetchPolicy: "cache-and-network",
+    variables: { ...variables }
   });
 
-  useEffect(() => {
-    if (data) {
-      setRepositories(data.repositories);
-    }
-  }, [data]);
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
 
-  return { repositories, loading };
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        ...variables,
+        after: data.repositories.pageInfo.endCursor
+      },
+    });
+  };
+
+
+  return {
+    repositories: data?.repositories,
+    fetchMore: handleFetchMore,
+    loading,
+    ...result
+  };
 };
 
 export default useRepositories;

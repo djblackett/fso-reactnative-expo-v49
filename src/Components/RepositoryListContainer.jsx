@@ -11,15 +11,16 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator}/>;
 
-const RepositoryListContainer = ({ repositories, selectedSortCategory, setSelectedSortCategory, searchQuery, setSearchQuery }) => {
+const RepositoryListContainer = ({ repositories, selectedSortCategory, setSelectedSortCategory, searchQuery, setSearchQuery, onEndReach }) => {
 
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
 
+  // console.log("repos loaded:",repositoryNodes.length);
+
   const navigate = useNavigate();
   const handleNavigate = (item) => {
-    // navigate("/" + (item.fullName).replaceAll("/", "-"));
     navigate("/" + encodeURI(item.id));
   };
 
@@ -34,6 +35,8 @@ const RepositoryListContainer = ({ repositories, selectedSortCategory, setSelect
         setSelectedSortCategory={setSelectedSortCategory}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}/>}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

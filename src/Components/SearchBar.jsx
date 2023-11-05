@@ -4,14 +4,13 @@ import { StyleSheet } from "react-native";
 
 const SearchBar = ({ searchQuery, setSearchQuery }) => {
 
-
   const styles = StyleSheet.create({
     container: {
       backgroundColor: "white",
       width: "90%",
       alignSelf: "center",
       marginTop: 8,
-      borderRadius: 2
+      borderRadius: 3
     }
   });
 

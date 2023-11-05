@@ -15,13 +15,11 @@ const SignInForm = ({ setLoggedIn, signIn }) => {
       try {
         // Use the returned data from signIn
         const data = await signIn({ username, password });
-        console.log(data);
         const token = data.authenticate.accessToken;
         if (token) {
           navigate("/");
           setLoggedIn(true);
         }
-        console.log(token);
       } catch (e) {
         console.log(e);
       }
